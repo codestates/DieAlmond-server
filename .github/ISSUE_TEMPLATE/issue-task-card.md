@@ -17,7 +17,5 @@ assignees: ''
 2. [] Job2
 3. [] Job3
 
-## TODO detail
-  1.
-  2.
-  3.
+### free
+ 'abc'
