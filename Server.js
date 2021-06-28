@@ -32,7 +32,7 @@ app.use('/bucket', BucketRouter)
 app.use('/condition', ConditionRouter)
 app.use('/contact', ContactRouter)
 app.use('/mypage', MypageRouter)
-// 해당 하는 모든 요청을 두번째 파라미터로 라우팅
+// 해당 하는 모든 요청을 파라미터로 라우팅
 
 app.get('/main',GetMain)
 app.get('/signout',Signout)
