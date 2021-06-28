@@ -1,3 +1,3 @@
 module.exports = (req,res)=>{
-    res.send('delete Bucket')
+    res.send('Sns Login')
 }

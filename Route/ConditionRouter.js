@@ -5,7 +5,7 @@ const ConditionSubmit = require('../Controller/ConditionSubmit')
 const ConditionRouter = express.Router();
 
 
-ConditionRouter.get('/',(req,res)=>res.send('get Condition'))
-ConditionRouter.patch('/',(req,res)=>res.send('patch Condition'))
+ConditionRouter.get('/',Condition)
+ConditionRouter.patch('/',ConditionSubmit)
 
 module.exports = ConditionRouter

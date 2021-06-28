@@ -1,3 +1,3 @@
-exports.module = (req,res)=>{
-    res.status(200).send("get Mypage")
+module.exports = (req,res)=>{
+    res.status(200).send("get MyBucket")
 }

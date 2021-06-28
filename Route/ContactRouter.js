@@ -6,9 +6,9 @@ const ContactTimeReset = require('../Controller/ContactTimeReset')
 
 const ContactRouter = express.Router();
 
-ContactRouter.get('/',(req,res)=>res.send('get Contact'))
-ContactRouter.patch('/delete',(req,res)=>ContactDelete(req,res))
-ContactRouter.patch('/add',(req,res)=>ContactAdd(req,res))
-ContactRouter.patch('/reset',(req,res)=>ContactTimeReset(req,res))
+ContactRouter.get('/',Contact)
+ContactRouter.patch('/delete',ContactDelete)
+ContactRouter.patch('/add',ContactAdd)
+ContactRouter.patch('/reset',ContactTimeReset)
 
 module.exports = ContactRouter

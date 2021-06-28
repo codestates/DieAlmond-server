@@ -4,7 +4,7 @@ const PatchMypage = require('../Controller/PatchMypage')
 
 const MypageRouter = express.Router();
 
-MypageRouter.get('/',(req,res)=>res.send('getMyapge'))
-MypageRouter.patch('/',(req,res)=>res.send('patchMypage'))
+MypageRouter.get('/',GetMypage)
+MypageRouter.patch('/',PatchMypage)
 
 module.exports = MypageRouter
