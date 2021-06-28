@@ -2,10 +2,15 @@
   "name": "dieAlmond_server",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT",
+  "licence": "MIT",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "mongoose": "^5.12.14"
-  }
+    "mongoose": "^5.12.15"
+  },
+  "description": "dieAlmond.shop",
+  "repository": "https://github.com/kilo718/DieAlmond-server.git",
+  "author": "kilo718 <kilo718@naver.com>",
+  "license": "MIT"
 }
