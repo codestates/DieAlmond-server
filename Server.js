@@ -10,7 +10,7 @@ const GetMain = require('./Controller/Main')
 const Setting = require('./Controller/Setting')
 const Signout = require('./Controller/SignOut')
 const WithDrawal = require('./Controller/WithDrawal.js')
-//라우팅 하기 애매한 요청들
+
 
 const Facebook = require('./Controller/SnsLogin/Facebook')
 const Github = require('./Controller/SnsLogin/Github')
@@ -28,11 +28,15 @@ app.get('/', (req,res)=>{res.send('Hello world')})
 app.post('/', (req,res)=>{res.send('post hello')})
 // 테스트용 
 
+app.get('/kakao',Kakao)
+app.get('/google',Google)
+
+
 app.use('/bucket', BucketRouter)
 app.use('/condition', ConditionRouter)
 app.use('/contact', ContactRouter)
 app.use('/mypage', MypageRouter)
-// 해당 하는 모든 요청을 두번째 파라미터로 라우팅
+// 해당 하는 모든 요청을 파라미터로 라우팅
 
 app.get('/main',GetMain)
 app.get('/signout',Signout)
