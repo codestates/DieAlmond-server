@@ -3,7 +3,8 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema(
     {
-        id:{type: Number, required:true},
+        id:{type: Number, required:false},
+        email:{type: String, required:true},
         likefromuser:[Number], // 내가 좋아요 한 사람
         nickname:{type:String, required:false},
         list:[String], // 개인 버킷리스트 인덱스 or 고유아이디가 들어감
