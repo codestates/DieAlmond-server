@@ -2,8 +2,24 @@
   "name": "dieAlmond_server",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT",
+  "licence": "MIT",
   "dependencies": {
-    "express": "^4.17.1"
+    "axios": "^0.21.1",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.15"
+  },
+  "description": "dieAlmond.shop",
+  "repository": "https://github.com/kilo718/DieAlmond-server.git",
+  "author": "kilo718 <kilo718@naver.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "karma": "^6.3.4",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-mocha": "^2.0.1",
+    "mocha": "^9.0.1"
   }
 }
