@@ -11,7 +11,7 @@ const userSchema = new Schema(
         list:[String], // 개인 버킷리스트 인덱스 or 고유아이디가 들어감
         age:{type:Number, required:false},
         alcohol:{type: Number, required:false},
-        smoke:{type: Number, required:false},
+        smoking:{type: Number, required:false},
         sleep:{type: Number, required:false},
         contact:[String],
         condition:[Number], //{1월1일:좋음, 2월2일:보통}

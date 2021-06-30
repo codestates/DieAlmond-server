@@ -24,6 +24,7 @@ require('dotenv').config()
 
 
 const app = express()
+app.use(express.json())
 app.get('/', (req,res)=>{res.send('Hello world')})
 app.post('/', (req,res)=>{res.send('post hello')})
 // 테스트용 

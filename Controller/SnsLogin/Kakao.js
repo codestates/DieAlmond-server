@@ -9,12 +9,13 @@ module.exports = async (req,res)=>{
             headers:{
                 'authorization':access_token
             }
-        }).then( async(kakaoData) => {
-            let userInfo = await User.findOne({'email':kakaoData.data.email})
+        }).then( async (kakaoData) => {
+            let userInfo = await User.findOne({'email':kakaoData.data.kakao_account.email})
             
-            if(!userInfo){ // 등록되지 않은 이메일 이라면
+            if(!userInfo){ // 등록되지 않은 이메일 이라면 생성한 모델로 db 에 입력
                 let userModel = new User();
                 userModel.email = kakaoData.data.kakao_account.email;
+                userModel.gender = kakaoData.data.kakao_account.gender
                 userModel.snsLogin = 'kakao'
                 userModel.nickname = kakaoData.data.kakao_account.profile.nickname;
                 
@@ -23,7 +24,7 @@ module.exports = async (req,res)=>{
                     'access_token':access_token,
                     msg:'success signup & signin'
                 }))
-                .catch(err => {
+                .catch(err => {   // mongoDB error catch
                     console.log('DB ERROR',err)
                     res.send('error 다시 시도해주세요')
                 })
@@ -35,7 +36,7 @@ module.exports = async (req,res)=>{
                 }
             }
         })
-        .catch(err => console.log(err))
+        .catch(err => console.log('axios error',err))  //axios error catch
     }
 }
         // 
