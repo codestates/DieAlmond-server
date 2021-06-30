@@ -23,13 +23,20 @@ module.exports = async (req,res)=>{
             userModel.email = googleData.data.email  //구글에서 받아온 이메일
             userModel.nickname = googleData.data.given_name
             userModel.snsLogin = 'google'
-            userModel.save().then('success').catch(err => console.log('DB ERROR',err))
-            res.send({'access_token':access_token,'msg':'sign up & sign in success'})
+            userModel.save()
+            .then(res.send({
+                'access_token':access_token,
+                msg:'sign up & sign in success'
+            }))
+            .catch(err => {
+                console.log('DB ERROR',err)
+                res.send('error 다시 시도해주세요')
+            })
         }else{ //db에 이미 존재하는 이메일임
             if(userInfo.snsLogin !== 'google'){  // 구글 회원이 맞는가? 다른 소셜 회원이라면 해당 하는 소셜로그인으로 다시 로그인 하라고 알림.
-                res.send(`해당 이메일은 이미 ${userInfo.snsLogin} 계정으로 가입되어 있습니다. ${userInfo.snsLogin} 으로 로그인 해주세요`)
+                res.status(401).send(`해당 이메일은 이미 ${userInfo.snsLogin} 계정으로 가입되어 있습니다. ${userInfo.snsLogin} 으로 로그인 해주세요`)
             }else{
-                res.send({'access_token':access_token,'msg':'login success'})
+                res.status(200).send({'access_token':access_token,'msg':'login success'})
             }
         }
     })
