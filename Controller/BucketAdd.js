@@ -48,7 +48,7 @@ module.exports = async (req, res) => {
           User.updateOne({ 'email': googleData.data.email },
             {
               $set: { 'list': allList }
-            })
+            }).then(res.status(200).send('추가되었습니다')).catch(err => {console.log(err),res.send('db 쓰기 오류')})
         }
       }).catch((err) => {
         console.log('Controller/PatchMypage :80 axios ERROR ', err)
