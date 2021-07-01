@@ -30,11 +30,11 @@ module.exports = async (req, res) => {
               }
             }).then(res.status(200).send('수정완료')).catch(err => console.log("Controller/SnsLogin/PatchMypage :28 DB update ERROR",err))  //DB 쓰기 성공 or 실패
           }else{                   
-            res.status(409).send({'code':-409,'msg':'Duplicate Nickname'})
+            res.status(409).send({'code':409,'msg':'Duplicate Nickname'})
           }
         }
       }).catch((err) => {
-        console.log("Controller/SnsLogin/PatchMypage :34 axios ERROR",err)
+        console.log("Controller/PatchMypage :34 axios ERROR",err)
         res.status(401).send('Expired Token')
       })  //axios error
     } else if (req.headers.sns === 'google') {   ///////////////////////////////////////////////////// google
@@ -69,19 +69,19 @@ module.exports = async (req, res) => {
                 }
               }).then(res.status(200).send('수정완료')).catch((err) => 
               {
-                console.log('Controller/SnsLogin/PatchMypage : 68 /DB update ERROR',err)
+                console.log('Controller/PatchMypage : 72 /DB update ERROR',err)
                 res.send({'code':404,'msg':'Please try again in a few minutes.'})
               })    // db 업데이트 에러
             }else{
-              res.status(409).send({'code':-409,'msg':'Duplicate Nickname'})
+              res.status(409).send({'code':409,'msg':'Duplicate Nickname'})
             }
           }
         }).catch((err) => {
-          console.log('Controller/SnsLogin/PatchMypage :77 axios ERROR ',err)
+          console.log('Controller/PatchMypage :80 axios ERROR ',err)
           if(err.response.status === 401){
-            res.status(401).send({'code':-401,'msg':err.response.statusText})
+            res.status(401).send({'code':401,'msg':err.response.statusText})
           }else if(err.response.status === 403){
-            res.status(403).send({'code':-401,'msg':err.response.statusText})
+            res.status(403).send({'code':401,'msg':err.response.statusText})
           }
         })
     }else{
