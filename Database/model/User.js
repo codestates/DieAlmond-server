@@ -8,7 +8,7 @@ const userSchema = new Schema(
         gender: { type: String, required: false },
         likefromuser: [Number], // 내가 좋아요 한 사람
         nickname: { type: String, required: false },
-        list: [String], // 개인 버킷리스트 인덱스 or 고유아이디가 들어감
+        list: [Object], // 개인 버킷리스트 인덱스 or 고유아이디가 들어감
         age: { type: Number, required: false },
         alcohol: { type: Number, required: false },
         smoking: { type: Number, required: false },
