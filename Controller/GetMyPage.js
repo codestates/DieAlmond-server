@@ -34,7 +34,7 @@ module.exports = async (req, res) => {
       }).then(async (kakaoData) => {
         let userInfo = await User.findOne({ 'email': kakaoData.data.kakao_account.email })
         if (!userInfo) { // 유효하지 않은 토큰 이라면
-          res.status(401).send({'code':-401,'msg':'invalid token'})
+          res.status(401).send({'code':401,'msg':'invalid token'})
         } else {  // 유효한 토큰이라면
           res.status(200).send({ 'userinfo': userInfo, 'msg': 'success' })
         }
