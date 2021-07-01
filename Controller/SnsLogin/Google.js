@@ -17,7 +17,6 @@ module.exports = async (req,res)=>{
         }
     }).then(async (googleData) => {  
         let userInfo =await User.findOne({'email':googleData.data.email}) //받아온 구글 데이터에서 email만 뽑아와 db를 조회한다.
-        
         if(!userInfo){ //db에 없는 email 이라면 즉 소셜 로그인을 한 적이 없다면(회원이 아니라면)
             let userModel = new User();
             userModel.email = googleData.data.email  //구글에서 받아온 이메일
