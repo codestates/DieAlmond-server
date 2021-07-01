@@ -51,9 +51,11 @@ module.exports = async (req, res) => {
             res.status(401).send('invalid token')
           } else {
             let valid = await User.findOne({'nickname': req.body.nickname})  //닉네임 중복체크
-            if(valid.email = userInfo.email){
+
+            if(valid.email = userInfo.email){  //나의 닉네임도 검색되는 문제
               valid = null
             }
+
             if(!valid){
               User.updateOne({ 'email': userInfo.email },  // 파라미터로 받은 데이터 db에서 수정
               {
