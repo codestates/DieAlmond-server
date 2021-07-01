@@ -6,7 +6,7 @@ module.exports = async (req,res)=>{
     let access_token = req.headers.authorization  //클라이언트가 보내준 엑세스 토큰
 
     if(access_token === undefined){
-        res.send('토큰이 만료되었습니다')
+        res.status(400).send('not found token')
     }
 
     await axios(`https://www.googleapis.com/oauth2/v3/userinfo`,  //클라이언트 에서 받은 토큰으로 구글 api 요청 => 유저정보 가져옴
@@ -37,6 +37,13 @@ module.exports = async (req,res)=>{
             }else{
                 res.status(200).send({'access_token':access_token,'msg':'login success'})
             }
+        }
+    }).catch((err)=>{  //err handle
+        console.log('Controller/SnsLogin/Google.js/ axios ERROR',err)
+        if(err.response.status === 401){
+            res.status(401).send({code:401,'msg':err.response.statusText}) //Unauthorized  
+        }else if(err.response.status === 403){
+            res.status(403).send({code:403,'msg':err.response.statusText})
         }
     })
 }
