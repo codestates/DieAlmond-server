@@ -1,22 +1,60 @@
-module.exports = (req,res)=>{
-//     const User = require('../Database/model/User')
-    
-//     let UserModel = new User();
-//     UserModel.id = 1,
-//     UserModel.likefromuser = [1,4,5,3,6]
-//     UserModel.nickname = 'kim',
-//     UserModel.list = ['헬스','레이싱'],
-//     UserModel.age = 24,
-//     UserModel.alcohol = 0,
-//     UserModel.smoke = 0,
-//     UserModel.sleep = 5,
-//     UserModel.contact = ['엄마','아빠','동생'],
-//     UserModel.dead = 60,
-//     UserModel.snsLogin = 'google'
-    
-//     UserModel.save().then(res.send('get Main success'))
-// .catch(err => console.log(err))
+const axios = require('axios')
+const User = require('../Database/model/User')
 
-res.send('get Main')
+module.exports = async (req,res)=>{
+
+  if(req.headers.authorization){  //토큰 있음
+    let access_token = req.headers.authorization
+    if(req.headers.sns === 'kakao'){     ///////////////////////////////kakao
+      await axios.get('https://kapi.kakao.com/v2/user/me',{
+        headers:{
+          'authorization':access_token
+        }
+      }).then( async (kakaoData) => {
+        let userInfo = await User.findOne({'email':kakaoData.data.kakao_account.email})
+
+        if(!userInfo){  //없으면
+          res.status(401).send({'code':401,'msg':'not authorization token'})
+        }else{
+          res.status(200).send({'userinfo':userInfo,'msg':'success'})
+        }
+      }).catch((err) => {
+        console.log('Controller/Main :22 axios ERROR:',err)
+        if(err.response.status === 400){
+          res.status(400).send({'code':400,'msg':err.response.statusText})
+        }else if(err.response.status === 401){
+          res.status(401).send({'code':401,'msg':err.response.statusText})
+        }
+      })
+    }else if(req.headers.sns === 'google'){   ///////////////////////////google
+      await axios('https://www.googleapis.com/oauth2/v3/userinfo',
+      {
+        method:'GET',
+        headers:{
+          'Authorization':access_token
+        }
+      }).then( async (googleData) => {
+        let userInfo = await User.findOne({'email':googleData.data.email})
+        
+        if(!userInfo){
+          res.status(401).send({'code':401,'msg':'not authorization token'})
+        }else{
+          res.status(200).send({'userinfo':userInfo,'msg':'success'})
+        }
+      }).catch((err) => {
+        console.log('Controller/Main :39 axios ERROR:',err)
+        if(err.response.status === 400){
+          res.status(400).send({'code':400,'msg':err.response.statusText})
+        }else if(err.response.status === 401){
+          res.status(401).send({'code':401,'msg':err.response.statusText})
+        }
+      })
+    }else{
+      res.status(400).send({'code':401,'msg':'Unknown sns Token'}) 
+    }
+
+  }else{
+    res.status(401).send({'code':401,'msg':'not found token'})
+  }
 }
 
