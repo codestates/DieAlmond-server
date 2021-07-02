@@ -16,7 +16,13 @@ module.exports = async(req, res) => {
           res.status(401).send('invalid token')
         }else{
           let allList = userInfo.list
-          delete allList[req.body.bucketid]
+
+          for(let i in allList){
+            if(allList[i].id === req.body.id){
+              delete allList[i]
+              break;
+            }
+          }
 
           allList = allList.filter((item)=>{
             return 'empty' !== item || 'undefined' !== item
