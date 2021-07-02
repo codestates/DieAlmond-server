@@ -1,5 +1,6 @@
 const axios = require('axios')
 const User = require('../Database/model/User')
+const BucketList = require('../Database/model/BucketList')
 
 module.exports = async (req, res) => {
   if (req.headers.authorization) {
@@ -17,6 +18,13 @@ module.exports = async (req, res) => {
         } else {
           let allList = userInfo.list
           allList.push({ ...req.body, isChecked: false }) //기존 배열에 받은 객체를 넣음
+
+          let bucketModel = new BucketList();
+          bucketModel.id = req.body.id
+          bucketModel.author = req.body.nickname
+          bucketModel.content = req.body.content
+
+          bucketModel.save().catch(err => { console.log('Controller/BucketAdd :27 db ERROR', err) })
           User.updateOne({ 'email': userInfo.email },
             {
               $set: { 'list': allList }
