@@ -17,7 +17,7 @@ module.exports = async (req,res)=>{
                 userModel.email = kakaoData.data.kakao_account.email;
                 userModel.gender = kakaoData.data.kakao_account.gender
                 userModel.snsLogin = 'kakao'
-                userModel.nickname = kakaoData.data.kakao_account.profile.nickname;
+                // userModel.nickname = kakaoData.data.kakao_account.profile.nickname;
                 
                 userModel.save()
                 .then(res.send({
