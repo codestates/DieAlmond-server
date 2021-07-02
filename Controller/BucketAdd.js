@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
   if (req.headers.authorization) {
     let access_token = req.headers.authorization
 
-    if (req.headers.sns === 'kakao') {
+    if (req.headers.sns === 'kakao') {        ////////////////// kakao  ////////////////////////////////
       await axios.get('https://kapi.kakao.com/v2/user/me', {
         headers: {
           'authorization': access_token
@@ -24,8 +24,9 @@ module.exports = async (req, res) => {
           bucketModel.id = req.body.id
           bucketModel.author = req.body.nickname
           bucketModel.content = req.body.bucketname
-
           bucketModel.save().catch(err => { console.log('Controller/BucketAdd :27 db ERROR', err) })
+          // db write
+
           User.updateOne({ 'email': userInfo.email },
             {
               $set: { 'list': allList }
@@ -39,27 +40,34 @@ module.exports = async (req, res) => {
           res.status(403).send({ 'code': 401, 'msg': err.response.statusText })
         }
       })
-    } else if (req.headers.sns === 'google') {
+    } else if (req.headers.sns === 'google') {  ///////////////////////////  goole ////////////////////////////////
       await axios('https://www.googleapis.com/oauth2/v3/userinfo', {
         method: 'GET',
         headers: {
           'Authorization': access_token
         }
-      }).then(async (googleData) => {
-        let userInfo = await User.findOne({ 'email': googleData.data.email })
+      }).then(async (googleData) => {  // axios sucess
+        let userInfo = await User.findOne({ 'email': googleData.data.email })  //search db
 
-        if (!userInfo) {
-          res.status(401).send('invalid token')
-        } else {
+        if (!userInfo) {  //not exist user
+          res.status(401).send('invalid token')  // invalid token
+        } else {  // exist user
           let allList = userInfo.list
-          allList.push({ ...req.body, isChecked: false })
+          allList.push({ ...req.body, isChecked: false })  // push data
 
-          User.updateOne({ 'email': googleData.data.email },
+          let bucketModel = new BucketList();
+          bucketModel.id = req.body.id
+          bucketModel.author = req.body.nickname
+          bucketModel.content = req.body.bucketname
+          bucketModel.save().catch(err => { console.log('Controller/BucketAdd :27 db ERROR', err) })
+          // db write
+
+          User.updateOne({ 'email': googleData.data.email },   //update Db
             {
-              $set: { 'list': allList }
-            }).then(res.status(200).send('추가되었습니다')).catch(err => {console.log(err),res.send('db 쓰기 오류')})
+              $set: { 'list': allList }  // update this filed
+            }).then(res.status(200).send('추가되었습니다')).catch(err => { console.log(err), res.send('db 쓰기 오류') })
         }
-      }).catch((err) => {
+      }).catch((err) => {//axios Error check api request headers
         console.log('Controller/PatchMypage :80 axios ERROR ', err)
         if (err.response.status === 401) {
           res.status(401).send({ 'code': 401, 'msg': err.response.statusText })
