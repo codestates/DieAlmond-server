@@ -52,7 +52,7 @@ module.exports = async (req, res) => {
           } else {
             let valid = await User.findOne({'nickname': req.body.nickname})  //닉네임 중복체크
 
-            if(valid.email = userInfo.email){  //나의 닉네임도 검색되는 문제
+            if(valid.email === userInfo.email){  //나의 닉네임도 검색되는 문제
               valid = null
             }
 
