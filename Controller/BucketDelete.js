@@ -20,7 +20,10 @@ module.exports = async(req, res) => {
           res.status(401).send('invalid token')
         }else{  ////////////////////////////////////////  delete user.list    target
           let allList = userDataRemover(userInfo.list, req.body.id) 
-          BucketList.deleteOne({'id':req.body.id}).catch('Controller/BucketDelete :23 db ERROR',err)
+          BucketList.deleteOne({'id':req.body.id}).catch(err=>{
+            console.log('Controller/BucketDelete :23 db ERROR',err)
+            res.send('잠시 후 다시 시도해주세요')
+          })
           //공유된 버킷리스트 데이터 삭제.
 
           User.updateOne({'email':userInfo.email},{
