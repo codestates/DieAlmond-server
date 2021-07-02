@@ -20,7 +20,7 @@ module.exports = async (req,res)=>{
         if(!userInfo){ //db에 없는 email 이라면 즉 소셜 로그인을 한 적이 없다면(회원이 아니라면)
             let userModel = new User();
             userModel.email = googleData.data.email  //구글에서 받아온 이메일
-            userModel.nickname = googleData.data.given_name
+            // userModel.nickname = googleData.data.given_name
             userModel.snsLogin = 'google'
             userModel.save()
             .then(res.send({

@@ -6,7 +6,7 @@ const User = require('../Database/model/User')
 module.exports = async (req, res) => {
   const gender = req.body.gender
   const age = req.body.age
-  const data = life(gender, age).toString()
+  const data = life(gender,age).toString()
 
   if (req.headers.authorization) {  //*회원* 이라면 db에 쓰고 회원 아니면 걍 데이터만 보내줌
     let access_token = req.headers.authorization
@@ -24,16 +24,22 @@ module.exports = async (req, res) => {
         } else {
           let valid = await User.findOne({ 'nickname': req.body.nickname })  //닉네임 중복체크
           
+          if(valid){
+            if(valid.email === userInfo.email){  //초기 닉네임 중복체크 내 닉네임은 중복으로 치지않고 그냥 업데이트함
+              valid = null
+            }
+          }
+          
           if (!valid) {
-            User.updateMany({ 'email': userInfo.email },
+            User.updateMany({'email': userInfo.email },
             {
               $set: {
                 'sleep': req.body.sleep,
                 'smoking': req.body.smoking,
-                'alcohol': req.body.alchohol,
+                'alcohol': req.body.alcohol,
                 'gender': req.body.gender,
-                'age': req.body.birth,
-                'nickcname': req.body.name
+                'age': req.body.age,
+                'nickname': req.body.nickname
               }
             }).then(res.status(200).send({ 'life': data, 'msg': 'success' }))
             .catch((err) => { 
