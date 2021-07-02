@@ -12,15 +12,15 @@ module.exports = async(req, res) => {
       }).then(async (kakaoData)=>{
         let userInfo = await User.findOne({'email':kakaoData.data.kakao_account.email})
 
-        if(!userInfo) {
+        if(!userInfo) {  
           res.status(401).send('invalid token')
         }else{
           let allList = userInfo.list
 
-          for(let i in allList){
+          for(let i in allList){   // 받아온 id 값을 기준으로 list 배열에서 삭제
             if(allList[i].id === req.body.id){
               delete allList[i]
-              break;
+              break;  // id값은 중복될 수 없음 불필요한 연산 제거
             }
           }
 
