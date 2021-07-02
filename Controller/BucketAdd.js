@@ -2,6 +2,7 @@ const axios = require('axios')
 const User = require('../Database/model/User')
 const BucketList = require('../Database/model/BucketList')
 
+
 module.exports = async (req, res) => {
   if (req.headers.authorization) {
     let access_token = req.headers.authorization
@@ -22,7 +23,7 @@ module.exports = async (req, res) => {
           let bucketModel = new BucketList();
           bucketModel.id = req.body.id
           bucketModel.author = req.body.nickname
-          bucketModel.content = req.body.content
+          bucketModel.content = req.body.bucketname
 
           bucketModel.save().catch(err => { console.log('Controller/BucketAdd :27 db ERROR', err) })
           User.updateOne({ 'email': userInfo.email },
