@@ -6,7 +6,7 @@ const User = require('../Database/model/User')
 module.exports = async (req, res) => {
   const gender = req.body.gender
   const age = req.body.age
-  const data = life(gender,age).toString()
+  const data = life(gender,age).toString()  //  life는 나이대별 기대여명을 리턴해주는 함수
 
   if (req.headers.authorization) {  //*회원* 이라면 db에 쓰고 회원 아니면 걍 데이터만 보내줌
     let access_token = req.headers.authorization
@@ -57,8 +57,43 @@ module.exports = async (req, res) => {
             res.status(403).send({ 'code': 401, 'msg': err.response.statusText })
           }
         })
-    } 
-  }else {// *비회원* 토큰 없어도 그냥 보내줌 기대여명
+    } else if(req.headers.sns === 'google'){
+      await axios('https://www.googleapis.com/oauth2/v3/userinfo',
+      {
+        method:'GET',
+        headers:{
+          'Authorization':access_token
+        }
+      }).then(async (googleData)=>{
+        let userInfo = await User.findOne({'email':googleData.data.email})
+        
+        if(!userInfo){
+          res.status(401).send('invalid token')
+        }else{
+          let valid = await User.findOne({ 'nickname': req.body.nickname })
+
+          if (!valid) {
+            User.updateMany({'email': userInfo.email },
+            {
+              $set: {
+                'sleep': req.body.sleep,
+                'smoking': req.body.smoking,
+                'alcohol': req.body.alcohol,
+                'gender': req.body.gender,
+                'age': req.body.age,
+                'nickname': req.body.nickname
+              }
+            }).then(res.status(200).send({ 'life': data, 'msg': 'success' }))
+            .catch((err) => { 
+              console.log('Controller/Setting db ERROR', err) 
+            })  
+          }else{
+            res.status(409).send({'code':409,'msg':'Duplicate Nickname'})
+          }
+        }
+      }).catch(err => console.log(err))
+    }
+  }else {// *비회원* 토큰 없어도 기대여명은 보내줌
     res.status(200).send({ 'life': data, 'msg': 'success' })
   }// 비회원도 받을 순 있음.
 }
