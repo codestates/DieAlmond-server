@@ -1,6 +1,6 @@
 const express = require('express')
-const Condition = require('../Controller/Condition')
-const ConditionSubmit = require('../Controller/ConditionSubmit')
+const Condition = require('../Controller/Contact&Condition/Condition')
+const ConditionSubmit = require('../Controller/Contact&Condition/ConditionSubmit')
 
 const ConditionRouter = express.Router();
 

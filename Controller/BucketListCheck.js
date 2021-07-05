@@ -4,35 +4,27 @@ const User = require('../Database/model/User')
 
 module.exports = async (req, res) => {
   let verifyData = await tokenVerify(req)
-  
-  if(verifyData === 400){  //err handle
-    res.status(400).send({'code':401,'msg':'Unknown Token'})
-  }else if(verifyData === 401){
-    res.status(401).send({'code':400,'msg':'not found token'})
-  }else{
-    let userinfo = await User.findOne({'email':verifyData.email})
-    
-    if(!userinfo){  // 받은 토큰으로 유저를 찾을 수 없음
-      res.status(401).send('invalid token')
-    }else{  // 토큰으로 유저를 찾음
-      for(let i in userinfo.list){  //userinfo.list 라는 배열을 돌면서 체크할 target을 찾음
-        let checkInfo = 
-        userinfo.list[i].id === req.body.id 
-        && userinfo.list[i].bucketname === req.body.bucketname 
-        && userinfo.list[i].nickname === req.body.nickname
+  let userinfo = await User.findOne({ 'email': verifyData.email })
 
-        if(checkInfo){  //조건에 맞는 target을 찾았다면
-          userinfo.list[i].isChecked = req.body.isChecked // target의.isChecked를 요청받은 요소로 변경 true or false
-          User.updateOne({'email':userinfo.email},
-          { 
-            $set: {'list':userinfo.list} 
+  if (userinfo) {  // 토큰으로 유저를 찾음
+    for (let i in userinfo.list) {  //userinfo.list 라는 배열을 돌면서 체크할 target을 찾음
+      let checkInfo =
+      userinfo.list[i].id === req.body.id
+      && userinfo.list[i].bucketname === req.body.bucketname
+      && userinfo.list[i].nickname === req.body.nickname     //조건
+
+      if (checkInfo) {  //조건에 맞는 target을 찾았다면
+        userinfo.list[i].isChecked = req.body.isChecked // target의.isChecked를 요청받은 요소로 변경 true or false
+        User.updateOne({ 'email': userinfo.email },
+          {
+            $set: { 'list': userinfo.list }
           }).then(res.status(200).send('변경 되었습니다'))
-          break;
-        }
+        break;
       }
-      // res.send('버킷 아이디 체크: test')
     }
+    // res.send('check request.id,nickname,bucketname': test')
   }
 }
+
 
 

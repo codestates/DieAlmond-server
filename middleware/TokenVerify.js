@@ -1,7 +1,6 @@
 const axios = require('axios')
 
-
-module.exports = async (req) => {
+module.exports = async (req,res) => {
   let data = ''
   if(req.headers.authorization){  // 토큰이 있다면
     let access_token = req.headers.authorization
@@ -14,6 +13,9 @@ module.exports = async (req) => {
         }
       }).then((googleData)=>{
         data = googleData.data
+        
+      }).catch((err) =>{
+        res.status(err.response.status).send({'code':err.response.status,'msg':err.response.statusText})
       })
       return data
     }else if(req.headers.sns === 'kakao'){
@@ -23,13 +25,13 @@ module.exports = async (req) => {
         }
       }).then((kakaoData)=>{
         data = kakaoData.data.kakao_account
+      }).catch((err) =>{
+        res.status(err.response.status).send({'code':err.response.status,'msg':err.response.statusText})
       })
       return data
-    }else{
-      return 401  // not exist (req.headers.sns)
+    }else if(0){ //add example
+      //add sns facebook,github ...
     }
-  }else{
-    return 400  // (req.headers.authorization)
   }
   // facebookVerify:(req,res){
   // }
