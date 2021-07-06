@@ -6,7 +6,7 @@ const userSchema = new Schema(
         id: { type: Number, required: false },
         email: { type: String, required: true },
         gender: { type: String, required: false },
-        likefromuser: [Number], // 내가 좋아요 한 사람
+        likedList: [Object], // 내가 좋아요 한 사람
         nickname: { type: String, required: false },
         list: [Object], // 개인 버킷리스트 인덱스 or 고유아이디가 들어감
         age: { type: Number, required: false },
