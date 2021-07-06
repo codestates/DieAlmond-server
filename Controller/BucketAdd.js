@@ -18,10 +18,10 @@ module.exports = async (req, res) => {
           res.status(401).send('invalid token')
         } else {
           let allList = userInfo.list
-          allList.push({ ...req.body, isChecked: false }) //기존 배열에 받은 객체를 넣음
+          allList.push({ ...req.body,like:[],isChecked: false }) //기존 배열에 받은 객체를 넣음
 
           let bucketModel = new BucketList();
-          bucketModel.id = req.body.id
+          bucketModel.id = req.body.bucketid
           bucketModel.author = req.body.nickname
           bucketModel.content = req.body.bucketname
           bucketModel.save().catch(err => { console.log('Controller/BucketAdd :27 db ERROR', err) })
@@ -56,7 +56,7 @@ module.exports = async (req, res) => {
           allList.push({ ...req.body, isChecked: false })  // push data
 
           let bucketModel = new BucketList();
-          bucketModel.id = req.body.id
+          bucketModel.id = req.body.bucketid
           bucketModel.author = req.body.nickname
           bucketModel.content = req.body.bucketname
           bucketModel.save().catch(err => { console.log('Controller/BucketAdd :27 db ERROR', err) })

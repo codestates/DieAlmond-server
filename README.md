@@ -5,6 +5,6 @@ Controller : All Controller
 Controller/SnsLogin : SnsLogin Controller
 
 Database : Db
-Database/model : Model
+Database/Model : Model
 
 Route : Routing Foler
