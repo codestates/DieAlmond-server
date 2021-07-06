@@ -3,7 +3,7 @@ const User = require('../Database/model/User')
 
 
 module.exports = async (req, res) => {
-  let verifyData = await tokenVerify(req)
+  const verifyData = await tokenVerify(req)
   let userinfo = await User.findOne({ 'email': verifyData.email })
 
   if (userinfo) {  // 토큰으로 유저를 찾음
