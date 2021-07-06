@@ -10,20 +10,20 @@ module.exports = async (req, res) => {
   let targetBucket = await BucketList.findOne({'id':req.body.bucketid})
   let checkLike = false;
   
-  console.log(targetBucket,"여기")
+  
   for(let i in targetBucket.like){
     if(targetBucket.like[i].id === userinfo.nickname){ // nickname or email or id 등 고유한 값 
       checkLike = true
       break;
     }
   }  // 이미 해당 게시물에 좋아요 했는지 안했는지 확인
-  console.log(checkLike,"true or false")
+  
   if(userinfo){
     let allLike
      //nickname or email or id 고유한 값 넣으면됨
     if(checkLike){ //이미 좋아요를 눌렀는데 다시 해당버킷으로 요청이오면 좋아요 취소.
       allLike = remover(targetBucket.like,userinfo.nickname)  // 배열의 특정요소 삭제해주는 커스텀 미들웨어
-      console.log(allLike,'삭제 후 데이터')
+
       await BucketList.updateOne({'id':req.body.bucketid},
       {
         $set:{'like':allLike}

@@ -11,3 +11,5 @@ module.exports = (list,id) => {
   })
   return allList
 }
+
+// list 는 1차원 배열에 객체가 들어있는 형태 그 속에.id가 있어야함
