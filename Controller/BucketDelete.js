@@ -1,6 +1,6 @@
 const axios = require('axios')
-const BucketList = require('../Database/model/BucketList')
-const User = require("../Database/model/User")
+const BucketList = require('../Database/Model/BucketList')
+const User = require("../Database/Model/User")
 const userDataRemover = require('../middleware/UserDataRemover')
 
 
