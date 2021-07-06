@@ -1,5 +1,5 @@
 const axios = require('axios')
-const User = require('../Database/model/User')
+const User = require('../Database/Model/User')
 //ya29.a0ARrdaM-9LJzD0veBAijIOvXg9uzhs75i_LMmpkVwpRTIqUU_9AdzWrdFS3CpT1BZWIfzhjPUgZAt011TwoHu9usYQCvRw9OSr6klA-iO32T507VOgMvKDuHYajY0ZRGyOCQpVpQ9z8n-atjdts3mpH_tvrcOvg
 module.exports = async (req, res) => {
   if (req.headers.authorization) {

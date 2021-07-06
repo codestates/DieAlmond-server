@@ -1,6 +1,6 @@
 
 const axios = require('axios')
-const User = require('../../Database/model/User')
+const User = require('../../Database/Model/User')
 
 module.exports = async (req,res)=>{
     if(req.headers.authorization){  // 헤더에 토큰이 있다면.
