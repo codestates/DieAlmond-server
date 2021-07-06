@@ -1,5 +1,5 @@
 const axios = require('axios')
-const User = require('../../Database/model/User')
+const User = require('../../Database/Model/User')
 const jwt = require('jsonwebtoken')
 
 module.exports = async (req,res)=>{

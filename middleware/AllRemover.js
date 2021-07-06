@@ -1,4 +1,4 @@
-const BucketList = require('../Database/model/BucketList')
+const BucketList = require('../Database/Model/BucketList')
 
 
 module.exports = (list) => {  // 해당 유저의 모든 게시물 삭제

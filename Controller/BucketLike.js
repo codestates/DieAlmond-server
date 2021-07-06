@@ -1,6 +1,6 @@
 const tokenVerify = require('../middleware/TokenVerify')
-const User = require('../Database/model/User')
-const BucketList = require('../Database/model/BucketList')
+const User = require('../Database/Model/User')
+const BucketList = require('../Database/Model/BucketList')
 const remover = require('../middleware/UserDataRemover')
 
 module.exports = async (req, res) => {
