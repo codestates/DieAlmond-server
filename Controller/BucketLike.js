@@ -5,11 +5,14 @@ const remover = require('../middleware/UserDataRemover')  // id라는 key 를 �
 const dataUpdate = require('../middleware/DataUpdate')  // 파라미터에 해당하는 model에서 특정데이터 업데이트
 const myListTargetLike = require('../middleware/MyListTargetLike')
 
+
 module.exports = async (req, res) => {
   const verifyData = await tokenVerify(req,res)
   
+
   let userinfo = await User.findOne({'email':verifyData.email})
   let targetBucket = await BucketList.findOne({'id':req.body.bucketid})
+  let targetUser = await User.findOne({'nickname':targetBucket.author})
   let checkLike = false;
   
   
@@ -31,7 +34,10 @@ module.exports = async (req, res) => {
       .then(                                       // 5 번째 파라미터는 옵션임 내용이 없다면 bucketList 수정, option이 입력됬다면 user 수정 
         likedList = remover(userinfo.likedList, req.body.bucketid),
         await dataUpdate(req,User,'likedList',likedList,userinfo)
-        .then(res.status(200).send('좋아요 취소'))
+        .then(
+          await myListTargetLike(req,userinfo,targetUser,'remove')
+          .then(res.status(200).send('좋아요 취소'))
+          )
       )
     }else{
       like = [...targetBucket.like, {'id':userinfo.nickname}] // 좋아요 누르는 부분, remover 함수를 사용하려면 id key가 포함된 객체여야함
@@ -39,7 +45,10 @@ module.exports = async (req, res) => {
       .then(
         likedList = [...userinfo.likedList,{'id':req.body.bucketid}],
         await dataUpdate(req,User,'likedList',likedList,userinfo)
-        .then(res.status(200).send('좋아요 성공'))
+        .then(
+          await myListTargetLike(req,userinfo,targetUser)
+          .then(res.status(200).send('좋아요 성공'))
+        )
       )
     }
   }else{
