@@ -3,9 +3,8 @@ const User = require('../../Database/Model/User')
 const jwt = require('jsonwebtoken')
 
 module.exports = async (req,res)=>{
-    let access_token = req.headers.Authorization  //클라이언트가 보내준 엑세스 토큰
-    console.log(access_token);
-    console.log(req);
+    let access_token = req.headers.authorization  //클라이언트가 보내준 엑세스 토큰
+
     if(access_token === undefined){
         res.status(400).send('not found token')
     }
