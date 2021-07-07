@@ -3,8 +3,9 @@ const User = require('../../Database/Model/User')
 const jwt = require('jsonwebtoken')
 
 module.exports = async (req,res)=>{
-    let access_token = req.headers.authorization  //클라이언트가 보내준 엑세스 토큰
-
+    let access_token = req.headers.Authorization  //클라이언트가 보내준 엑세스 토큰
+    console.log(access_token);
+    console.log(req);
     if(access_token === undefined){
         res.status(400).send('not found token')
     }
@@ -37,13 +38,6 @@ module.exports = async (req,res)=>{
             }else{
                 res.status(200).send({'access_token':access_token,'msg':'login success'})
             }
-        }
-    }).catch((err)=>{  //err handle
-        console.log('Controller/SnsLogin/Google.js/ axios ERROR',err)
-        if(err.response.status === 401){
-            res.status(401).send({code:401,'msg':err.response.statusText}) //Unauthorized  
-        }else if(err.response.status === 403){
-            res.status(403).send({code:403,'msg':err.response.statusText})
         }
     })
 }
