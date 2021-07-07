@@ -23,6 +23,10 @@ BucketRouter.get('/all',AllBucket)
 BucketRouter.patch('/add',BucketAdd)
 BucketRouter.patch('/check',BucketListCheck)
 BucketRouter.patch('/like',BucketLike)
+BucketRouter.use((req, res, next) => {
+    res.statusCode = 404;
+    res.send({'code':404,'msg':'request could not be found'})
+  });
 
 module.exports = BucketRouter
 
