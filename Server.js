@@ -4,6 +4,7 @@ const BucketRouter  = require('./Route/BucketRouter.js')   //route
 const ConditionRouter = require('./Route/ConditionRouter.js')
 const ContactRouter = require('./Route/ContactRouter.js')
 const MypageRouter = require('./Route/MypageRouter.js')  
+const cors = require('cors')
 //라우팅
 
 const GetMain = require('./Controller/Main')
@@ -12,11 +13,12 @@ const Signout = require('./Controller/SignOut')
 const WithDrawal = require('./Controller/WithDrawal.js')
 
 
-const Facebook = require('./Controller/SnsLogin/Facebook')
-const Github = require('./Controller/SnsLogin/Github')
+// const Facebook = require('./Controller/SnsLogin/Facebook')
+// const Github = require('./Controller/SnsLogin/Github')
 const Google = require('./Controller/SnsLogin/Google')
 const Kakao = require('./Controller/SnsLogin/Kakao')
-const Naver = require('./Controller/SnsLogin/Naver')
+// const Naver = require('./Controller/SnsLogin/Naver')
+
 //소셜 로그인 컨트롤러
 
 require('dotenv').config()
@@ -25,6 +27,10 @@ require('dotenv').config()
 
 const app = express()
 app.use(express.json())
+app.cors({
+    'Access-Control-Allow-Origin':'*',
+    'Access-Control-Allow-Methods':'POST,GET,OPTIONS,DELETE,PATCH'
+})
 app.get('/', (req,res)=>{res.send('Hello world')})
 app.post('/', (req,res)=>{res.send('post hello')})
 // 테스트용 
@@ -43,6 +49,7 @@ app.get('/main',GetMain)
 app.get('/signout',Signout)
 app.post('/setting',Setting)
 app.delete('/withdrawal',WithDrawal)
+
 // 
 
 //monogodb connect
