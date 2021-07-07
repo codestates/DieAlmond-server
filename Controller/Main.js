@@ -2,7 +2,7 @@ const axios = require('axios')
 const User = require('../Database/Model/User')
 
 module.exports = async (req,res)=>{
-
+  console.log('mainmainmainmain', req.headers)
   if(req.headers.authorization){  //토큰 있음
     let access_token = req.headers.authorization
     if(req.headers.sns === 'kakao'){     ///////////////////////////////kakao

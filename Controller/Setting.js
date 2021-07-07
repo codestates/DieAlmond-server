@@ -66,14 +66,14 @@ module.exports = async (req, res) => {
         }
       }).then(async (googleData)=>{
         let userInfo = await User.findOne({'email':googleData.data.email})
-        
+        console.log(req.body)
         if(!userInfo){
           res.status(401).send('invalid token')
         }else{
-          let valid = await User.findOne({ 'nickname': req.body.nickname })
+          let valid = await User.findOne({ 'nickname': req.body.nickName })
 
           if (!valid) {
-            User.updateMany({'email': userInfo.email },
+            await User.updateMany({'email': userInfo.email },
             {
               $set: {
                 'sleep': req.body.sleep,
@@ -81,7 +81,7 @@ module.exports = async (req, res) => {
                 'alcohol': req.body.alcohol,
                 'gender': req.body.gender,
                 'age': req.body.age,
-                'nickname': req.body.nickname
+                'nickname': req.body.nickName
               }
             }).then(res.status(200).send({ 'life': data, 'msg': 'success' }))
             .catch((err) => { 
