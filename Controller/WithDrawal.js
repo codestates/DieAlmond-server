@@ -4,6 +4,7 @@ const BucketList = require('../Database/Model/BucketList')
 const allRemover = require('../middleware/AllRemover')
 
 module.exports = async (req, res) => {
+  console.log(req)
   if (req.headers.authorization) {
     let access_token = req.headers.authorization
     if (req.headers.sns === 'kakao') {   ///////////////////////////kakao

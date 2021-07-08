@@ -33,12 +33,13 @@ module.exports = async (req, res) => {
             'Authorization': access_token
           }
         }).then(async (googleData) => {
-          let userInfo = User.findOne({ 'email': googleData.data.eamil })
-
+          console.log('ㅇㅡ아아아아아아앙', googleData)
+          let userInfo = await User.findOne({ 'email': googleData.data.email })
+          console.log('userinfofofoo', userInfo)
           if (!userInfo) {
             res.status(401).send('invalid token')
           } else {
-            res.status(200).send({user:{ 'bucketlist': userInfo.list},'msg': 'success' })
+            res.status(200).send({'user':{ 'bucketlist': userInfo.list},'msg': 'success' })
           }
         }).catch((err) => {  //axios error handle
           console.log('Controller/MyBucket :36 axios ERROR', err)
