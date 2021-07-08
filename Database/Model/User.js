@@ -15,7 +15,7 @@ const userSchema = new Schema(
         sleep: { type: Number, required: false },
         contact: [String],
         condition: [Number], //{1월1일:좋음, 2월2일:보통}
-        dead: { type: Number, required: false },
+        restLife: { type: Number, required: false },
         snsLogin: { type: String }  // 카카오로 가입했는지 페북으로 했는지 저장해둠
     }
 );

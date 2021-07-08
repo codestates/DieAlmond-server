@@ -81,7 +81,8 @@ module.exports = async (req, res) => {
                 'alcohol': req.body.alcohol,
                 'gender': req.body.gender,
                 'age': req.body.age,
-                'nickname': req.body.nickName
+                'nickname': req.body.nickName,
+                'restLife':data
               }
             }).then(res.status(200).send({ 'life': data, 'msg': 'success' }))
             .catch((err) => { 
@@ -102,3 +103,6 @@ module.exports = async (req, res) => {
 // 시작버튼 누르고 들어온 비회원유저도 파라미터는 받는다 그 후 서버에서 토큰 검사를함
 // 헤더에 토큰이 없다면 비회원으로 간주하고 기대 여명만 보내줌
 // 헤더에 토큰이 있다면 회원으로 간주하고 토큰 해독 후 해당 유저의 정보에 입력 그 후 데이터 보냄
+
+
+/// restLife
