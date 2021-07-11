@@ -2,7 +2,6 @@ const axios = require('axios')
 const User = require('../Database/Model/User')
 
 module.exports = async (req,res)=>{
-  console.log('mainmainmainmain', req.headers)
   if(req.headers.authorization){  //토큰 있음
     let access_token = req.headers.authorization
     if(req.headers.sns === 'kakao'){     ///////////////////////////////kakao
@@ -19,7 +18,7 @@ module.exports = async (req,res)=>{
           res.status(200).send({'userinfo':userInfo,'msg':'success'})
         }
       }).catch((err) => {
-        console.log('Controller/Main :22 axios ERROR:',err)
+        console.log('Controller/Main :21 axios ERROR:',err)
         if(err.response.status === 400){
           res.status(400).send({'code':400,'msg':err.response.statusText})
         }else if(err.response.status === 401){
@@ -42,7 +41,7 @@ module.exports = async (req,res)=>{
           res.status(200).send({'userinfo':userInfo,'msg':'success'})
         }
       }).catch((err) => {
-        console.log('Controller/Main :39 axios ERROR:',err)
+        console.log('Controller/Main :44 axios ERROR:',err)
         if(err.response.status === 400){
           res.status(400).send({'code':400,'msg':err.response.statusText})
         }else if(err.response.status === 401){

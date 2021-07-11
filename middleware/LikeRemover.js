@@ -16,6 +16,7 @@ async function removeLikedBucket(bucketlist,target,userinfo) { // db처리 해�
   let right = bucketlist.slice(middle, bucketlist.length) // middle 값을 기준으로 오른쪽 모든 요소
   
   if (bucketlist[middle].id === Number(target.id)) {  // target.id가 string형식으로 들어가있음 일단 임시로 Number로 바꿈
+    console.log(target)
     let like = remover(bucketlist[middle].like,userinfo.nickname)  // remover는 커스텀 함수; target.id를 bucketlist에서 찾았다면 해당 리스트에서 userinfo.nickname 요소만 삭제 후 정렬
     await BucketList.updateOne({'id':bucketlist[middle].id},  
     {

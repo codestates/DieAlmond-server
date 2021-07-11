@@ -1,6 +1,7 @@
 const life = require('../life/life')
 const axios = require('axios')
 const User = require('../Database/Model/User')
+const nickNameChange = require('../middleware/NicknameChange')
 
 // { year : 1999, month: 2, day: 17, gender : male, sleep : 8, smoking : 10, alcohol : 2}
 module.exports = async (req, res) => {
@@ -84,7 +85,9 @@ module.exports = async (req, res) => {
                 'nickname': req.body.nickName,
                 'restLife':data
               }
-            }).then(res.status(200).send({ 'life': data, 'msg': 'success' }))
+            }).then(
+              nickNameChange(req,userInfo))
+              .then(res.status(200).send({ 'life': data, 'msg': 'success' }))
             .catch((err) => { 
               console.log('Controller/Setting db ERROR', err) 
             })  
@@ -105,4 +108,5 @@ module.exports = async (req, res) => {
 // 헤더에 토큰이 있다면 회원으로 간주하고 토큰 해독 후 해당 유저의 정보에 입력 그 후 데이터 보냄
 
 
-/// restLife
+// 요청이 들어왔는데 토큰이 있다면 => 중복닉네임 체크 => 중복닉네임 없다면 userinfo에 정보 입력, req.body.nickname이 bucketlist[n].id 와 같다면 bucketlist[n].id 를 변경
+// 
