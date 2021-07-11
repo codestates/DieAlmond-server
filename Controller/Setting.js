@@ -86,10 +86,10 @@ module.exports = async (req, res) => {
                 'nickname': req.body.nickName,
                 'restLife':data
               }
-            }).then(async (r) => {
-              await nickNameChange(req,userInfo)
+            }).then(
+              nickNameChange(req,userInfo),
               res.status(200).send({ 'life': data, 'msg': 'success' })
-            })
+            )
             .catch((err) => { 
               console.log('Controller/Setting db ERROR', err) 
             })  
