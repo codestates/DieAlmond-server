@@ -2,6 +2,7 @@ const life = require('../life/life')
 const axios = require('axios')
 const User = require('../Database/Model/User')
 const nickNameChange = require('../middleware/NicknameChange')
+const BucketList = require('../Database/Model/BucketList')
 
 // { year : 1999, month: 2, day: 17, gender : male, sleep : 8, smoking : 10, alcohol : 2}
 module.exports = async (req, res) => {
@@ -74,7 +75,7 @@ module.exports = async (req, res) => {
           let valid = await User.findOne({ 'nickname': req.body.nickName })
 
           if (!valid) {
-            await User.updateMany({'email': userInfo.email },
+            await User.updateOne({'email': userInfo.email },
             {
               $set: {
                 'sleep': req.body.sleep,
@@ -85,9 +86,10 @@ module.exports = async (req, res) => {
                 'nickname': req.body.nickName,
                 'restLife':data
               }
-            }).then(
-              nickNameChange(req,userInfo))
-              .then(res.status(200).send({ 'life': data, 'msg': 'success' }))
+            }).then(async (r) => {
+              await nickNameChange(req,userInfo)
+              res.status(200).send({ 'life': data, 'msg': 'success' })
+            })
             .catch((err) => { 
               console.log('Controller/Setting db ERROR', err) 
             })  
