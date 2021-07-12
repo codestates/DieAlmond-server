@@ -4,7 +4,9 @@ const obj = xlsx.parse(__dirname + '/lifedata.xlsx')  // 엑셀 데이터 읽어
 // 혹시 ec2에서 작동 안된다면 obj에 복붙해서 직접 넣기
 
 module.exports = (gender, age) => {
-  
+  if(age < 0){
+    age = 0  // 만 나이라서 -1 이 나옴
+  }
   //obj 인덱스 0,1에는 설명이 들어있음 age + 2 해서 데이터 보내주면됨. 
   //남자 obj[0].data[age+2][1]
   //여자 obj[0].data[age+2][2]
