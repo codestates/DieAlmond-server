@@ -5,10 +5,8 @@ const userDataRemover = require('../middleware/UserDataRemover')
 
 
 module.exports = async(req, res) => {
-  console.log('reqreq', req)
   if (req.headers.authorization) {
     let access_token = req.headers.authorization
-    console.log('accccc',access_token)
     if(req.headers.sns === 'kakao'){ ////////////////////////////kakao
       await axios.get('https://kapi.kakao.com/v2/user/me',{
         headers:{
@@ -16,8 +14,6 @@ module.exports = async(req, res) => {
         }
       }).then(async (kakaoData)=>{
         let userInfo = await User.findOne({'email':kakaoData.data.kakao_account.email})
-        
-
         if(!userInfo) {  
           res.status(401).send('invalid token')
         }else{  ////////////////////////////////////////  delete user.list    target
@@ -42,9 +38,7 @@ module.exports = async(req, res) => {
           'Authorization':access_token
         }
       }).then(async (googleData) => {
-        console.log(googleData)
         let userInfo = await User.findOne({'email':googleData.data.email})
-        console.log('fjiowejfaweoi',userInfo)
         if(!userInfo){
           res.status(401).send('invalid token')
         }else{  ////////////////////////////////////////  delete user.list    target

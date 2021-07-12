@@ -4,7 +4,6 @@ const BucketList = require('../Database/Model/BucketList')
 
 
 module.exports = async (req, res) => {
-  console.log('foiwejfoiwejiow', req.body)
   if (req.headers.authorization) {
     let access_token = req.headers.authorization
 
