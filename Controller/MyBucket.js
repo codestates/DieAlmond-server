@@ -33,9 +33,7 @@ module.exports = async (req, res) => {
             'Authorization': access_token
           }
         }).then(async (googleData) => {
-          console.log('ㅇㅡ아아아아아아앙', googleData)
           let userInfo = await User.findOne({ 'email': googleData.data.email })
-          console.log('userinfofofoo', userInfo)
           if (!userInfo) {
             res.status(401).send('invalid token')
           } else {

@@ -9,12 +9,10 @@ const myListTargetLike = require('../middleware/MyListTargetLike')
 module.exports = async (req, res) => {
   const verifyData = await tokenVerify(req,res)
   
-
   let userinfo = await User.findOne({'email':verifyData.email})
   let targetBucket = await BucketList.findOne({'id':req.body.bucketid})
   let targetUser = await User.findOne({'nickname':targetBucket.author})
   let checkLike = false;
-  
   
   for(let i in targetBucket.like){
     if(targetBucket.like[i].id === userinfo.nickname){ // nickname or email or id 등 고유한 값 
@@ -22,12 +20,9 @@ module.exports = async (req, res) => {
       break;
     }
   }  // 이미 해당 게시물에 좋아요 했는지 안했는지 확인
-
-  
   if(userinfo){
     let like
     let likedList
-
     if(checkLike){ //이미 좋아요를 눌렀는데 다시 같은 요청이오면 좋아요 취소.
       like = remover(targetBucket.like, userinfo.nickname)  // 배열의 특정 요소 삭제해주는 함수 (*단 1차원 배열속 객체 형태여야함 + id key가 있어야함*)
       await dataUpdate(req,BucketList,'like',like)  //dataUpdate 함수는 5개의 파라미터를 받아서 문자열을 기준으로 조회 후 변경해줌

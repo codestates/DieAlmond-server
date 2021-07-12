@@ -3,7 +3,6 @@ const BucketList = require('../Database/Model/BucketList')
 const User = require('../Database/Model/User')
 
 module.exports = async (req, res) => {
-  console.log('allbucket',req)
   let verifyData = await tokenVerify(req,res)
 
   let userinfo = await User.findOne({'email':verifyData.email})
