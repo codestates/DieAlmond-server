@@ -28,7 +28,7 @@ require('dotenv').config()
 const app = express()
 app.use(express.json())
 app.use(cors({
-    origin: 'https://dup9jqa253s68.cloudfront.net/',
+    origin: 'https://www.diealmond.shop',
     credentials: true,
     method: ['GET', 'POST', 'DELETE', 'PUT', 'OPTIONS']
 }))
