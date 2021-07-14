@@ -2,7 +2,7 @@ const axios = require('axios')
 const BucketList = require('../Database/Model/BucketList')
 const User = require("../Database/Model/User")
 const userDataRemover = require('../middleware/UserDataRemover')
-const remover = require('../middleware/UserDataRemover')
+
 
 
 module.exports = async(req, res) => {
