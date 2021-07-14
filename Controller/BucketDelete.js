@@ -5,6 +5,7 @@ const userDataRemover = require('../middleware/UserDataRemover')
 
 
 
+
 module.exports = async(req, res) => {
   if (req.headers.authorization) {
     let access_token = req.headers.authorization
@@ -48,7 +49,7 @@ module.exports = async(req, res) => {
           .then(async (data)=>{
             for(let i in data.like){
               let targetInfo = await User.findOne({'nickname':data.like[i].id})
-              let likedlist = await remover(targetInfo.likedList,String(req.body.id))
+              let likedlist = await userDataRemover(targetInfo.likedList,String(req.body.id))
               await User.updateOne({'nickname':targetInfo.nickname},
               {
                 $set:{'likedList':likedlist}

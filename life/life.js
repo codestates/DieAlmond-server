@@ -7,7 +7,7 @@ module.exports = (gender, age) => {
   if(age < 0){
     age = 0  // 만 나이라서 -1 이 나옴
   }else if(age > 100){
-    age = 56
+    age = 100
   }
   //obj 인덱스 0,1에는 설명이 들어있음 age + 2 해서 데이터 보내주면됨. 
   //남자 obj[0].data[age+2][1]
