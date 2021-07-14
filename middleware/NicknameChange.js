@@ -28,6 +28,8 @@ module.exports = async (req, userInfo) => {
     for (let i in userInfo.likedList) {
       let targetBucket = await BucketList.findOne({ 'id': userInfo.likedList[i].id })  // 유저가 좋아요한 게시물을 bucketList에서 찾음
       let like = targetBucket.like   // 해당 게시물의 좋아요한 사람 목록
+      console.log('유저가 좋아요한 목록',like)
+      
       for (let k in like) {  // 목록을 조회해서 현재 유저의 닉네임과 같은 것을 찾음
         if (like[k].id === userInfo.nickname) {  // 목표 게시물의 좋아요 리스트에서 해당하는 유저의 닉네임이 나온다면
           like[k].id = req.body.nickName  // 해당 닉네임을 변경하려는 닉네임으로 바꿈

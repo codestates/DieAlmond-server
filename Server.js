@@ -28,7 +28,7 @@ require('dotenv').config()
 const app = express()
 app.use(express.json())
 app.use(cors({
-    origin: 'https://www.diealmond.shop',
+    origin: 'http://localhost:3000',
     credentials: true,
     method: ['GET', 'POST', 'DELETE', 'PUT', 'OPTIONS']
 }))

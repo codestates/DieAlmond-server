@@ -2,6 +2,7 @@ const axios = require('axios')
 const BucketList = require('../Database/Model/BucketList')
 const User = require("../Database/Model/User")
 const userDataRemover = require('../middleware/UserDataRemover')
+const remover = require('../middleware/UserDataRemover')
 
 
 module.exports = async(req, res) => {
@@ -43,6 +44,17 @@ module.exports = async(req, res) => {
           res.status(401).send('invalid token')
         }else{  ////////////////////////////////////////  delete user.list    target
           let allList = userDataRemover(userInfo.list, req.body.id)
+          await BucketList.findOne({'id':req.body.id})
+          .then(async (data)=>{
+            for(let i in data.like){
+              let targetInfo = await User.findOne({'nickname':data.like[i].id})
+              let likedlist = await remover(targetInfo.likedList,String(req.body.id))
+              await User.updateOne({'nickname':targetInfo.nickname},
+              {
+                $set:{'likedList':likedlist}
+              })
+            }
+          })
           BucketList.deleteOne({'id':req.body.id}).catch('Controller/BucketDelete :23 db ERROR')
           //공유된 버킷리스트 데이터 삭제.
 
@@ -57,3 +69,8 @@ module.exports = async(req, res) => {
     res.status(400).send({'code':400,'msg':'not found token'})
   }
 }
+
+
+// 게시물 삭제 시 해당 게시물의 like 배열을 조회 후 좋아요한 사람의 아이디를 찾으러 간다
+// for문으로 User.find(nickname:like[0]) 을 하고 likedList remover(likedList,req.body.id)
+// $set:likedList:likedList 로 바꾼다.
