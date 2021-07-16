@@ -6,7 +6,7 @@ module.exports = async (req, res) => {
   let verifyData = await tokenVerify(req,res)
 
   let userinfo = await User.findOne({'email':verifyData.email})
-  let listAll = await BucketList.find({})
+  let listAll = await BucketList.find({}).sort({'id':-1})
   
   if(userinfo){
     res.status(200).send({'bucketList':listAll})
