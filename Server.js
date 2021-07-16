@@ -4,6 +4,7 @@ const BucketRouter = require('./Route/BucketRouter.js')   //route
 const ConditionRouter = require('./Route/ConditionRouter.js')
 const ContactRouter = require('./Route/ContactRouter.js')
 const MypageRouter = require('./Route/MypageRouter.js')
+const Crawling = require('./Controller/Crawling.js')
 const cors = require('cors')
 //라우팅
 
@@ -45,7 +46,7 @@ app.use('/condition', ConditionRouter)
 app.use('/contact', ContactRouter)
 app.use('/mypage', MypageRouter)
 // 해당 하는 모든 요청을 파라미터로 라우팅
-
+app.get('/crawl',Crawling)
 app.get('/main', GetMain)
 app.get('/signout', Signout)
 app.post('/setting', Setting)
