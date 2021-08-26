@@ -1,12 +1,12 @@
 const axios = require('axios')
-const User = require('../../Database/model/User')
+const User = require('../../Database/Model/User')
 const jwt = require('jsonwebtoken')
 
 module.exports = async (req,res)=>{
     let access_token = req.headers.authorization  //클라이언트가 보내준 엑세스 토큰
 
     if(access_token === undefined){
-        res.send('토큰이 만료되었습니다')
+        res.status(400).send('not found token')
     }
 
     await axios(`https://www.googleapis.com/oauth2/v3/userinfo`,  //클라이언트 에서 받은 토큰으로 구글 api 요청 => 유저정보 가져옴
@@ -17,11 +17,10 @@ module.exports = async (req,res)=>{
         }
     }).then(async (googleData) => {  
         let userInfo =await User.findOne({'email':googleData.data.email}) //받아온 구글 데이터에서 email만 뽑아와 db를 조회한다.
-        
         if(!userInfo){ //db에 없는 email 이라면 즉 소셜 로그인을 한 적이 없다면(회원이 아니라면)
             let userModel = new User();
             userModel.email = googleData.data.email  //구글에서 받아온 이메일
-            userModel.nickname = googleData.data.given_name
+            // userModel.nickname = googleData.data.given_name
             userModel.snsLogin = 'google'
             userModel.save()
             .then(res.send({

@@ -1,8 +1,8 @@
 const express = require('express')
-const Contact = require('../Controller/Contact')
-const ContactDelete = require('../Controller/ContactDelete')
-const ContactAdd = require('../Controller/ContactAdd')
-const ContactTimeReset = require('../Controller/ContactTimeReset')
+const Contact = require('../Controller/Contact&Condition/Contact')
+const ContactDelete = require('../Controller/Contact&Condition/ContactDelete')
+const ContactAdd = require('../Controller/Contact&Condition/ContactAdd')
+const ContactTimeReset = require('../Controller/Contact&Condition/ContactTimeReset')
 
 const ContactRouter = express.Router();
 
